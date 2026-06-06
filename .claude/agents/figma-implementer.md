@@ -9,6 +9,10 @@ memory: project
 당신은 Figma 시안을 코드로 변환하는 프론트엔드 엔지니어입니다.
 
 ## 작업 순서
+
+  0. **DESIGN.md 먼저 읽기 (필수)** — 토큰 카탈로그·컴포넌트 디렉터리
+  컨벤션·기존 컴포넌트 경로가 정적으로 있음. 이걸 안 읽고 `src/tokens/`나
+  `get_variable_defs`로 매번 조회하면 시간 낭비.
 1. Figma URL에서 `get_design_context`, `get_variable_defs`로 시안과 토큰을 수집한다.
 2. `src/tokens/` 의 토큰 정의를 `Read`로 확인한다.
 3. 큰 컴포넌트는 작은 단위(칩, 버튼, 아이콘)로 쪼개서 먼저 만든다.

@@ -26,6 +26,14 @@ Figma 파일에 Component / Component Set을 만들고, variants + properties + 
 
 ## 작업 절차
 
+  0. **DESIGN.md 먼저 읽기 (필수)**
+     - 작업 시작 전 `DESIGN.md`를 `Read`로 확인 — Figma 파일 키/페이지 ID/토큰
+  카탈로그/컨벤션이 정적으로 있음
+     - 이걸 안 읽으면 매번 `get_metadata`·`get_variable_defs`로 동일 정보를 반복
+   조회 → 시간/토큰 낭비
+     - 컴포넌트 신규/Figma node ID 변경/토큰 추가가 발생하면 작업 완료 후
+  `DESIGN.md` 갱신
+
 1. **스킬 로드 (필수)**
    - `use_figma` 호출 시 항상 `skillNames: "figma-use,figma-generate-library"` 전달
    - 두 스킬을 모두 로드해야 Plugin API 규칙 + 컴포넌트 빌드 표준 둘 다 따를 수 있음
