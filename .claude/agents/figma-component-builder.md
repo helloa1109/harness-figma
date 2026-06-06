@@ -127,7 +127,27 @@ variant property가 2개면 → 한쪽 가로, 다른 쪽 세로.
 - **Documentation frame은 반드시 `Documentation` 페이지에 생성** — 87:123
 - **페이지 컨텍스트 전환**: `await figma.setCurrentPageAsync(page)`로 활성화 후 작업 (한 use_figma 호출에 setCurrentPageAsync는 1번만 — 여러 페이지 작업이면 호출 분할)
 - 컴포넌트 좌표: (0, 0) 근처에서 시작, 격자 8px 단위 정렬
-- Documentation frame 좌표: 컴포넌트 셋과 같은 y, x는 0부터 (별도 페이지라 겹침 없음)
+### 좌표 충돌 방지 (필수)
+
+  같은 페이지에 형제 frame이 누적되므로, **신규 frame 배치 전 반드시 기존
+  frame들의 bounding box를 조회해 우측 끝에 gap 200px 띄워 배치**한다.
+
+  1. `get_metadata`로 대상 페이지 자식 frame 목록 + 각 frame의 `x / y / width /
+  height` 조회
+  2. `rightmost_x = max(child.x + child.width)` 계산 (페이지가 비어있으면 0)
+  3. 신규 frame의 시작 x = `rightmost_x + 200`
+  4. y는 기존 frame들과 동일한 baseline에 맞춤 (페이지가 비어있으면 0, 아니면 첫
+   frame의 y 사용)
+  5. 검증: 신규 frame 배치 후 다른 frame과 bounding box 겹침 0 확인
+
+  | 페이지 | 충돌 방지 적용 |
+  |--------|---------------|
+  | `Components` (87:122) | Component Set들이 가로로 누적 — 우측에 + 200px |
+  | `Documentation` (87:123) | Documentation frame들이 가로로 누적 — 우측에 +
+  200px |
+
+  **예외**: 동일 컴포넌트의 갱신(같은 이름이 이미 존재 → 수정 모드)일 때는 기존
+  좌표 유지.
 
 ### 명명
 - 컴포넌트: PascalCase 단수 (예: `Button`, `TextField`, `Badge`)
