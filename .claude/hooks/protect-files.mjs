@@ -1,16 +1,18 @@
 #!/usr/bin/env node
 /**
- * PreToolUse 훅: src/tokens/ 파일 직접 수정 차단
- * 토큰은 /build-tokens 커맨드를 통해서만 수정 가능
+ * PreToolUse 훅: 보호된 경로 직접 수정 차단
+ *
+ * 보호 경로:
+ *   - src/tokens/              ← /build-tokens 커맨드로만 수정 가능 (sentinel 우회 허용)
+ *   - .claude/agents/          ← 사용자 수동 수정만
+ *   - .claude/hooks/           ← 사용자 수동 수정만
+ *   - .claude/settings.json    ← 사용자 수동 수정만
+ *
+ * sentinel(.claude/.build-tokens-active)이 5분 이내에 만들어졌으면
+ * src/tokens/ 쓰기만 허용. 다른 보호 경로는 sentinel과 무관하게 항상 차단.
  */
 
-import { readFileSync, existsSync } from "node:fs";
-
-// /build-tokens 커맨드 우회: sentinel 파일이 존재하면 모든 차단 통과
-// 명시적으로 토큰 빌드 실행 중일 때만 활성화됨
-if (existsSync(".claude/.build-tokens-active")) {
-  process.exit(0);
-}
+import { readFileSync, existsSync, statSync } from "node:fs";
 
 const PROTECTED_PATHS = [
   "src/tokens/",
@@ -18,6 +20,18 @@ const PROTECTED_PATHS = [
   ".claude/hooks/",
   ".claude/settings.json",
 ];
+
+// sentinel로 우회 가능한 경로 — /build-tokens 전용
+const SENTINEL_BYPASS_PATHS = new Set(["src/tokens/"]);
+
+const SENTINEL_FILE = ".claude/.build-tokens-active";
+const SENTINEL_TTL_MS = 5 * 60 * 1000;
+
+function sentinelFresh() {
+  if (!existsSync(SENTINEL_FILE)) return false;
+  const ageMs = Date.now() - statSync(SENTINEL_FILE).mtimeMs;
+  return ageMs < SENTINEL_TTL_MS;
+}
 
 try {
   const input = JSON.parse(readFileSync(0, "utf-8"));
@@ -30,16 +44,22 @@ try {
   }
 
   for (const protectedPath of PROTECTED_PATHS) {
-    if (filePath.includes(protectedPath)) {
-      console.error(
-        JSON.stringify({
-          decision: "block",
-          reason: `🚫 보호된 경로 (${protectedPath})는 직접 수정할 수 없습니다. ` +
-            `토큰은 /build-tokens 커맨드, 하네스는 사용자가 수동으로 수정하세요.`,
-        })
-      );
-      process.exit(2);
+    if (!filePath.includes(protectedPath)) continue;
+
+    // sentinel이 신선하고, 이 경로가 sentinel 우회 허용 목록에 있으면 통과
+    if (SENTINEL_BYPASS_PATHS.has(protectedPath) && sentinelFresh()) {
+      process.exit(0);
     }
+
+    console.error(
+      JSON.stringify({
+        decision: "block",
+        reason:
+          `🚫 보호된 경로 (${protectedPath})는 직접 수정할 수 없습니다. ` +
+          `토큰은 /build-tokens 커맨드, 하네스는 사용자가 수동으로 수정하세요.`,
+      })
+    );
+    process.exit(2);
   }
 
   process.exit(0);
