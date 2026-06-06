@@ -84,7 +84,7 @@
   --color-action-bg-default:    var(--color-brand-500);
   --color-action-bg-hover:      var(--color-brand-600);
   --color-action-bg-pressed:    var(--color-brand-700);
-  --color-action-text-on-brand: var(--color-neutral-0); /* 주의: alias가 neutral-0라 다크에서 검정으로 따라감 → 필요시 컴포넌트가 직접 #fff 고정 */
+  --color-action-text-on-brand: oklch(1 0 89.9); /* #FFFFFF 고정 — brand 배경(라이트/다크 동일)에 항상 흰 텍스트 */
   --color-action-text-brand:    var(--color-brand-700);
 
   /* Text */

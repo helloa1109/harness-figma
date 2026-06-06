@@ -76,7 +76,7 @@ export const DarkMode: Story = {
     duration: "3일",
   },
   parameters: {
-    backgrounds: { default: "dark", values: [{ name: "dark", value: "#171717" }] },
+    backgrounds: { default: "dark", values: [{ name: "dark", value: "var(--color-neutral-900)" }] },
   },
   decorators: [
     (Story) => (
