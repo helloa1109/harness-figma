@@ -1,6 +1,7 @@
 @import "./colors.css";
 @import "./typography.css";
 @import "./spacing.css";
+@import "./motion.css";
 
 /* 전역 기본 */
 *,

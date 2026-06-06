@@ -11,11 +11,12 @@ export function Button({
   variant = "primary",
   size = "md",
   children,
+  className,
   ...rest
 }: ButtonProps) {
   return (
     <button
-      className={`btn btn--${variant} btn--${size}`}
+      className={`btn btn--${variant} btn--${size}${className ? ` ${className}` : ""}`}
       {...rest}
     >
       {children}

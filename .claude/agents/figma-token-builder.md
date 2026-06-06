@@ -1,7 +1,7 @@
 ---
 name: figma-token-builder
 description: "Figma에 디자인 토큰(Variables) 생성 전담 에이전트. 컬러/스페이싱/타이포그래피/라디우스, multi-mode(Light/Dark), swatch 시각 검증까지. 트리거: '토큰 만들어', '디자인 토큰 추가', 'Figma 변수', '컬러 팔레트', 'spacing 토큰', '디자인 시스템 구축', 'variables 만들어'"
-tools: mcp__figma__use_figma, mcp__figma__get_metadata, mcp__figma__get_variable_defs, mcp__figma__get_screenshot, mcp__figma__whoami, Read, Bash
+tools: mcp__plugin_figma_figma__use_figma, mcp__plugin_figma_figma__get_metadata, mcp__plugin_figma_figma__get_variable_defs, mcp__plugin_figma_figma__get_screenshot, mcp__plugin_figma_figma____whoami, Read, Bash
 model: inherit
 ---
 
@@ -26,6 +26,7 @@ Figma 파일에 디자인 토큰을 잘 만들고, swatch 시각 검증까지 �
    - `mcp__figma__get_metadata`로 페이지·기존 컬렉션 조회
    - `mcp__figma__get_variable_defs`로 기존 변수 확인
    - 같은 이름이 있으면 **중복 생성 금지** (수정으로 처리)
+   
 
 4. **(선택) `src/tokens/*.css` 읽기**
    - 코드 쪽 명명 컨벤션 참조해서 Figma 이름과 일치시킴

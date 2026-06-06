@@ -32,6 +32,32 @@
   --color-success: oklch(0.696 0.149 162.5); /* #10B981 */
   --color-warning: oklch(0.769 0.165 70.1); /* #F59E0B */
   --color-danger: oklch(0.637 0.208 25.3); /* #EF4444 */
+
+  /* ── Semantic alias layer ───────────────────────────────
+     primitive 위에 의미 부여. 컴포넌트는 이 토큰만 참조한다.
+     라이트/다크 양쪽 WCAG AA 4.5:1 검증 (단, 아래 주의 참조). */
+
+  /* Action — 버튼/CTA */
+  --color-action-bg-default:    var(--color-brand-500);
+  --color-action-bg-hover:      var(--color-brand-600);
+  --color-action-bg-pressed:    var(--color-brand-700);
+  --color-action-text-on-brand: var(--color-neutral-0); /* 주의: alias가 neutral-0라 다크에서 검정으로 따라감 → 필요시 컴포넌트가 직접 #fff 고정 */
+  --color-action-text-brand:    var(--color-brand-700);
+
+  /* Text */
+  --color-text-primary:   var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-tertiary:  var(--color-neutral-500);
+  --color-text-brand:     var(--color-brand-700);
+
+  /* Surface */
+  --color-surface-default: var(--color-neutral-0);
+  --color-surface-subtle:  var(--color-neutral-50);
+  --color-surface-muted:   var(--color-neutral-100);
+
+  /* Border */
+  --color-border-default: var(--color-neutral-200);
+  --color-border-strong:  var(--color-neutral-300);
 }
 
 /* Dark 모드 — OS 설정 따라 자동 적용 (brand는 모드 무관) */
@@ -54,5 +80,10 @@
     --color-success: oklch(0.773 0.153 163.2); /* #34D399 */
     --color-warning: oklch(0.837 0.164 84.4); /* #FBBF24 */
     --color-danger: oklch(0.711 0.166 22.2); /* #F87171 */
+
+    /* Semantic alias — brand 계열만 다크에서 톤 변경.
+       neutral 기반은 colors.css의 neutral 반전을 자동 상속하므로 재정의 불필요. */
+    --color-action-text-brand: var(--color-brand-300);
+    --color-text-brand:        var(--color-brand-300);
   }
 }
