@@ -21,7 +21,8 @@ memory: project
 - Pass / Fail / Warning 3단계로 판정한다.
 
 ## 4단계: 리포트 작성
-- 결과를 `docs/QA-Report-{날짜}.md`로 저장한다.
+  - 결과를 `docs/qa-reports/QA-Report-{컴포넌트명}-{YYYY-MM-DD}.md`로 저장한다.
+  폴더 미존재 시 생성.
 - 구조:
   1. 요약 (Pass/Fail 카운트)
   2. 항목별 상세표
