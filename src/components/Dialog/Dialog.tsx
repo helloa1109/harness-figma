@@ -66,8 +66,8 @@ const SIZE_WIDTH: Record<DialogSize, string> = {
 const OVERLAY_CLASS = [
   "fixed inset-0 z-50",
   "bg-[var(--color-neutral-opacity-500)]",
-  "data-[state=open]:animate-[dialogFadeIn_var(--motion-duration-base)_var(--motion-easing-standard)]",
-  "data-[state=closed]:animate-[dialogFadeOut_var(--motion-duration-fast)_var(--motion-easing-standard)]",
+  "data-[state=open]:animate-in data-[state=open]:fade-in-0",
+  "data-[state=closed]:animate-out data-[state=closed]:fade-out-0",
 ].join(" ");
 
 const CONTENT_CLASS = [
@@ -83,22 +83,9 @@ const CONTENT_CLASS = [
   "focus:outline-none",
   "focus-visible:outline focus-visible:outline-[length:var(--focus-ring-width)] focus-visible:outline-offset-[length:var(--focus-ring-offset)]",
   "focus-visible:outline-[var(--focus-ring-color)]",
-  "data-[state=open]:animate-[dialogContentIn_var(--motion-duration-base)_var(--motion-easing-emphasized)]",
-  "data-[state=closed]:animate-[dialogContentOut_var(--motion-duration-fast)_var(--motion-easing-standard)]",
+  "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
+  "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
 ].join(" ");
-
-const KEYFRAMES_CSS = `
-@keyframes dialogFadeIn { from { opacity: 0 } to { opacity: 1 } }
-@keyframes dialogFadeOut { from { opacity: 1 } to { opacity: 0 } }
-@keyframes dialogContentIn {
-  from { opacity: 0; transform: translate(-50%, -50%) scale(0.96) }
-  to   { opacity: 1; transform: translate(-50%, -50%) scale(1) }
-}
-@keyframes dialogContentOut {
-  from { opacity: 1; transform: translate(-50%, -50%) scale(1) }
-  to   { opacity: 0; transform: translate(-50%, -50%) scale(0.98) }
-}
-`;
 
 export interface DialogContentProps
   extends Omit<
@@ -134,7 +121,6 @@ export const DialogContent = forwardRef<
   const { size } = useDialogContext();
   return (
     <DialogPrimitives.Portal container={container ?? undefined}>
-      <style>{KEYFRAMES_CSS}</style>
       <DialogPrimitives.Overlay
         className={[OVERLAY_CLASS, overlayClassName ?? ""]
           .filter(Boolean)

@@ -98,51 +98,13 @@
 - `src/components/ui/TextField.tsx` (시드 1, 향후 디렉터리 통일 시 이동)
 - `src/components/ui/TripCard.tsx` (데모용)
 
-### 슬롯 시스템 (균일 200px gap 동적 좌표)
+### 좌표 룰 (균일 200gap)
 
-새 컴포넌트는 **마지막 컴포넌트 우측 끝 + 200px**에 배치. 시각적으로 균일 gap. 좌표는 아래 표에 직접 기록 (계산 X, race 0).
+새 컴포넌트는 **마지막 frame 우측 끝 + 200px**에 배치. 가로로 누적, y=0 (Components) 또는 y=-16 (Documentation) 유지.
 
-**Documentation 페이지 (87:123, y=-16)**
-
-| N | 컴포넌트 | x | width |
-|---|---|---|---|
-| 1 | TextField | 0 | 1624 |
-| 2 | Badge | 1824 | 1068 |
-| 3 | Checkbox | 3092 | 1028 |
-| 4 | Switch | 4320 | 716 |
-| 5 | IconButton | 5236 | 833 |
-| 6 | Skeleton | 6269 | 1384 |
-| 7 | TabItem | 7853 | 1040 |
-| 8 | TabsList | 9093 | 1440 |
-| 9 | Button | 10733 | 806 |
-| 10 | Card | 11739 | 1384 |
-| 11 | Avatar | 13323 | 1168 |
-| 12 | Dialog | 14691 | 1672 |
-| 13 | Toast | 16563 | 2158 |
-
-**Components 페이지 (87:122, y=0)** — N=1 TextField는 격자 0~720 (240×3개), 그 외는 각 Component Set 우측 끝 + 200
-
-| N | 컴포넌트 | x | width |
-|---|---|---|---|
-| 2 | Badge | 1000 | 700 |
-| 3 | Checkbox | 1900 | 118 |
-| 4 | Switch | 2218 | 142 |
-| 5 | IconButton | 2560 | 112 |
-| 6 | Skeleton | 2872 | 304 |
-| 7 | TabItem | 3376 | 900 |
-| 8 | TabsList | 4476 | 340 |
-| 9 | Button | 5016 | 184 |
-| 10 | Card | 5400 | 1848 |
-| 11 | Avatar | 7448 | 1200 |
-| 12 | Dialog | 8848 | 2600 |
-| 13 | Toast | 11648 | 1584 |
-
-**새 컴포넌트 추가 시 (N=14~)**
-1. 마지막 컴포넌트 좌표 + width + 200 으로 새 x 계산
-2. 위 표에 새 행 추가
-3. 에이전트에 명시 좌표 전달 (Components/Documentation 각각)
-
-**병렬 호출 시**: 메인이 두 컴포넌트 좌표를 미리 계산해 각 에이전트에 명시 전달. 다른 좌표라 절대 안 겹침.
+- `get_metadata`로 현재 페이지의 frame들 `max(x + width)` 확인 → 새 x = `max + 200`
+- 병렬 호출 시: 호출자가 좌표 명시 전달 (race condition 회피)
+- N=1 TextField는 Component Set이 아닌 개별 컴포넌트 15개 격자 (Components 페이지 0~720)
 
 ---
 
