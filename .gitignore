@@ -1,0 +1,42 @@
+node_modules
+dist
+dist-ssr
+*.local
+
+.vite
+.turbo
+.cache
+
+# Storybook
+storybook-static
+
+# Playwright
+test-results
+playwright-report
+blob-report
+playwright/.cache
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+
+# Claude local overrides
+.claude/settings.local.json
+
+# /build-tokens sentinel
+.claude/.build-tokens-active

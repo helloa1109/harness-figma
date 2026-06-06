@@ -1,0 +1,54 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(./**)",
+      "Write(./src/**)",
+      "Write(./docs/**)",
+      "Edit(./src/**)",
+      "Bash(npm:*)",
+      "Bash(node:*)"
+    ],
+    "deny": [
+      "Write(./.claude/**)",
+      "Bash(rm:*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/protect-files.mjs"
+          },
+          {
+            "type": "command",
+            "command": "node .claude/hooks/detect-hardcoded-colors.mjs"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/check-story-exists.mjs"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/notify.mjs"
+          }
+        ]
+      }
+    ]
+  }
+}

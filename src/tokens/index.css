@@ -1,0 +1,20 @@
+@import "./colors.css";
+@import "./typography.css";
+@import "./spacing.css";
+
+/* 전역 기본 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-neutral-900);
+  background: var(--color-neutral-0);
+}
