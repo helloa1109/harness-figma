@@ -83,7 +83,9 @@
 | 7 | TabsList | `156:89` | `159:400` | `src/components/Tab/Tab.tsx` | 6 | ✅ `@radix-ui/react-tabs` | `fb7d447` |
 | 8 | Button | `166:293` | `185:621` | `src/components/Button/Button.tsx` | 36 | ❌ | (pending) |
 | 9 | Card | `179:101` | `186:709` | `src/components/Card/Card.tsx` | 18 | ❌ | (pending) |
-| 10 | Avatar | `167:455` | `176:541` | `src/components/Avatar/Avatar.tsx` | 72 | ❌ | (pending) |
+| 10 | Avatar | `167:455` | `176:541` | `src/components/Avatar/Avatar.tsx` | 72 | ❌ | `3d1df2f` |
+| 11 | Dialog | `199:217` | `203:837` | `src/components/Dialog/Dialog.tsx` | 9 | ✅ `@radix-ui/react-dialog` | (pending) |
+| 12 | Toast | `196:169` | `200:721` | `src/components/Toast/Toast.tsx` | 16 | ✅ `@radix-ui/react-toast` | (pending) |
 
 **기타 (시드 외)**
 - `src/components/ui/Button.tsx` (초기 prototype)
