@@ -12,6 +12,7 @@ export type CardPadding = "sm" | "md" | "lg";
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   variant?: CardVariant;
   padding?: CardPadding;
+  /** clickable 처리 (cursor + hover lift + keyboard 활성화). onClick 함께 전달 권장. */
   interactive?: boolean;
   children: ReactNode;
 }
@@ -19,7 +20,8 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 const VARIANT_SURFACE: Record<CardVariant, string> = {
   outlined:
     "bg-[var(--color-surface-default)] border border-[var(--color-border-default)] border-[length:var(--border-width-thin)]",
-  elevated: "bg-[var(--color-surface-default)]",
+  elevated:
+    "bg-[var(--color-surface-default)] shadow-[var(--shadow-card-rest)] hover:shadow-[var(--shadow-card-hover)]",
   flat: "bg-[var(--color-surface-subtle)]",
 };
 
@@ -28,9 +30,6 @@ const PADDING_TOKEN: Record<CardPadding, string> = {
   md: "p-[var(--space-lg)]",
   lg: "p-[var(--space-xl)]",
 };
-
-const ELEVATED_SHADOW = "var(--shadow-card-rest)";
-const ELEVATED_SHADOW_HOVER = "var(--shadow-card-hover)";
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   {
@@ -41,16 +40,24 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
     className,
     onClick,
     onKeyDown,
-    onMouseEnter,
-    onMouseLeave,
     role,
     tabIndex,
-    style,
     ...rest
   },
   ref,
 ) {
   const isClickable = interactive && typeof onClick === "function";
+
+  if (
+    process.env.NODE_ENV !== "production" &&
+    interactive &&
+    !isClickable &&
+    !role
+  ) {
+    console.warn(
+      "[Card] interactive=true 인데 onClick 없음 — 키보드/role 활성화 안 됨. onClick 전달 또는 interactive=false 권장.",
+    );
+  }
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (isClickable && (event.key === "Enter" || event.key === " ")) {
@@ -58,20 +65,6 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
       onClick?.(event as unknown as MouseEvent<HTMLDivElement>);
     }
     onKeyDown?.(event);
-  };
-
-  const handleMouseEnter = (event: MouseEvent<HTMLDivElement>) => {
-    if (interactive && variant === "elevated") {
-      event.currentTarget.style.boxShadow = ELEVATED_SHADOW_HOVER;
-    }
-    onMouseEnter?.(event);
-  };
-
-  const handleMouseLeave = (event: MouseEvent<HTMLDivElement>) => {
-    if (interactive && variant === "elevated") {
-      event.currentTarget.style.boxShadow = ELEVATED_SHADOW;
-    }
-    onMouseLeave?.(event);
   };
 
   const base =
@@ -90,20 +83,12 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
     .filter(Boolean)
     .join(" ");
 
-  const composedStyle =
-    variant === "elevated"
-      ? { boxShadow: ELEVATED_SHADOW, ...(style ?? {}) }
-      : style;
-
   return (
     <div
       ref={ref}
       className={classes}
-      style={composedStyle}
       onClick={onClick}
       onKeyDown={handleKeyDown}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       role={isClickable ? role ?? "button" : role}
       tabIndex={isClickable ? tabIndex ?? 0 : tabIndex}
       {...rest}

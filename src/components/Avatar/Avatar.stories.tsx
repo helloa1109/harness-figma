@@ -123,11 +123,25 @@ export const DarkMode: Story = {
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-md)" }}>
       <div style={{ display: "flex", gap: "var(--space-md)", alignItems: "center" }}>
+        <span style={{ width: "5rem", fontSize: "var(--font-size-xs)", color: "var(--color-text-secondary)" }}>image</span>
+        {SIZES.map((size) => (
+          <Avatar key={size} size={size} src="https://i.pravatar.cc/100?img=12" alt="User" />
+        ))}
+      </div>
+      <div style={{ display: "flex", gap: "var(--space-md)", alignItems: "center" }}>
+        <span style={{ width: "5rem", fontSize: "var(--font-size-xs)", color: "var(--color-text-secondary)" }}>initials</span>
         {SIZES.map((size) => (
           <Avatar key={size} size={size} initials="JD" alt={`${size} JD`} />
         ))}
       </div>
       <div style={{ display: "flex", gap: "var(--space-md)", alignItems: "center" }}>
+        <span style={{ width: "5rem", fontSize: "var(--font-size-xs)", color: "var(--color-text-secondary)" }}>icon</span>
+        {SIZES.map((size) => (
+          <Avatar key={size} size={size} alt={`${size} anonymous`} />
+        ))}
+      </div>
+      <div style={{ display: "flex", gap: "var(--space-md)", alignItems: "center" }}>
+        <span style={{ width: "5rem", fontSize: "var(--font-size-xs)", color: "var(--color-text-secondary)" }}>status</span>
         {STATUSES.map((status) => (
           <Avatar key={status} size="lg" initials="JD" status={status} alt={`Status ${status}`} />
         ))}
