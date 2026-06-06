@@ -78,7 +78,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   ref,
 ) {
   const base =
-    "inline-flex items-center justify-center whitespace-nowrap rounded-[var(--radius-full)] font-sans font-bold leading-[var(--line-height-tight)]";
+    "inline-flex items-center justify-center whitespace-nowrap rounded-[var(--radius-full)] font-sans font-[number:var(--font-weight-semibold)] leading-[var(--line-height-tight)]";
   const classes = [
     base,
     SIZE_PADDING[size],

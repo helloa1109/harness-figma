@@ -46,15 +46,15 @@ const VARIANT_SURFACE: Record<ToastVariant, string> = {
     "border-[var(--color-border-default)]",
   ].join(" "),
   success: [
-    "bg-[var(--color-success-50)]",
+    "bg-[var(--color-feedback-surface-success)]",
     "border-[var(--color-success-500)]",
   ].join(" "),
   warning: [
-    "bg-[var(--color-warning-50)]",
+    "bg-[var(--color-feedback-surface-warning)]",
     "border-[var(--color-warning-500)]",
   ].join(" "),
   danger: [
-    "bg-[var(--color-danger-50)]",
+    "bg-[var(--color-feedback-surface-danger)]",
     "border-[var(--color-danger-500)]",
   ].join(" "),
 };
@@ -181,7 +181,7 @@ export const Toast = forwardRef<
           .filter(Boolean)
           .join(" ")}
         style={{
-          boxShadow: "0 4px 12px var(--color-neutral-opacity-100)",
+          boxShadow: "var(--shadow-overlay)",
           ...style,
         }}
       >
@@ -311,8 +311,8 @@ export const ToastClose = forwardRef<
         "rounded-[var(--radius-sm)]",
         "transition-colors duration-[var(--motion-duration-fast)]",
         "[transition-timing-function:var(--motion-easing-standard)]",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
-        "focus-visible:outline-[var(--color-brand-500)]",
+        "focus-visible:outline focus-visible:outline-[length:var(--focus-ring-width)] focus-visible:outline-offset-[length:var(--focus-ring-offset)]",
+        "focus-visible:outline-[var(--focus-ring-color)]",
         className ?? "",
       ]
         .filter(Boolean)

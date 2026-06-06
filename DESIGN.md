@@ -61,10 +61,16 @@
 - Duration: `--motion-duration-fast(120ms) base(200ms) slow(320ms)`
 - Easing: `--motion-easing-standard`, `--motion-easing-emphasized`
 
+### 신설 토큰 (`src/tokens/semantic-extras.css`, 수동 관리)
+- `--focus-ring-width/offset/color` ✅ (8개 컴포넌트 적용)
+- `--font-weight-semibold(600)` ✅ (Badge 적용)
+- `--shadow-card-rest/hover` ✅ (Card 적용)
+- `--shadow-dialog` ✅ (Dialog 적용)
+- `--shadow-overlay` ✅ (Toast 적용)
+- `--shadow-thumb` ✅ (Switch 적용)
+- `--color-feedback-surface-{success,warning,danger}` ✅ (Toast 다크모드 분기)
+
 ### 누락된 토큰 (별도 PR 후보)
-- `--font-weight-semibold(600)` (Badge에서 우회 중)
-- `--shadow-thumb` (Switch 인라인 사용 중)
-- `--focus-ring-width/offset/color` (5개 컴포넌트 하드코딩 중)
 - ghost variant hover 전용 토큰 (IconButton 다크모드)
 
 ---
@@ -85,11 +91,58 @@
 | 9 | Card | `179:101` | `186:709` | `src/components/Card/Card.tsx` | 18 | ❌ | (pending) |
 | 10 | Avatar | `167:455` | `176:541` | `src/components/Avatar/Avatar.tsx` | 72 | ❌ | `3d1df2f` |
 | 11 | Dialog | `199:217` | `203:837` | `src/components/Dialog/Dialog.tsx` | 9 | ✅ `@radix-ui/react-dialog` | (pending) |
-| 12 | Toast | `196:169` | `200:721` | `src/components/Toast/Toast.tsx` | 16 | ✅ `@radix-ui/react-toast` | (pending) |
+| 12 | Toast | `196:169` | `200:721` | `src/components/Toast/Toast.tsx` | 16 | ✅ `@radix-ui/react-toast` | `6c565a2` |
 
 **기타 (시드 외)**
-- `src/components/ui/Button.tsx` (초기 prototype)
+- ~~`src/components/ui/Button.tsx`~~ (제거됨, fa1b3c3)
+- `src/components/ui/TextField.tsx` (시드 1, 향후 디렉터리 통일 시 이동)
 - `src/components/ui/TripCard.tsx` (데모용)
+
+### 슬롯 시스템 (균일 200px gap 동적 좌표)
+
+새 컴포넌트는 **마지막 컴포넌트 우측 끝 + 200px**에 배치. 시각적으로 균일 gap. 좌표는 아래 표에 직접 기록 (계산 X, race 0).
+
+**Documentation 페이지 (87:123, y=-16)**
+
+| N | 컴포넌트 | x | width |
+|---|---|---|---|
+| 1 | TextField | 0 | 1624 |
+| 2 | Badge | 1824 | 1068 |
+| 3 | Checkbox | 3092 | 1028 |
+| 4 | Switch | 4320 | 716 |
+| 5 | IconButton | 5236 | 833 |
+| 6 | Skeleton | 6269 | 1384 |
+| 7 | TabItem | 7853 | 1040 |
+| 8 | TabsList | 9093 | 1440 |
+| 9 | Button | 10733 | 806 |
+| 10 | Card | 11739 | 1384 |
+| 11 | Avatar | 13323 | 1168 |
+| 12 | Dialog | 14691 | 1672 |
+| 13 | Toast | 16563 | 2158 |
+
+**Components 페이지 (87:122, y=0)** — N=1 TextField는 격자 0~720 (240×3개), 그 외는 각 Component Set 우측 끝 + 200
+
+| N | 컴포넌트 | x | width |
+|---|---|---|---|
+| 2 | Badge | 1000 | 700 |
+| 3 | Checkbox | 1900 | 118 |
+| 4 | Switch | 2218 | 142 |
+| 5 | IconButton | 2560 | 112 |
+| 6 | Skeleton | 2872 | 304 |
+| 7 | TabItem | 3376 | 900 |
+| 8 | TabsList | 4476 | 340 |
+| 9 | Button | 5016 | 184 |
+| 10 | Card | 5400 | 1848 |
+| 11 | Avatar | 7448 | 1200 |
+| 12 | Dialog | 8848 | 2600 |
+| 13 | Toast | 11648 | 1584 |
+
+**새 컴포넌트 추가 시 (N=14~)**
+1. 마지막 컴포넌트 좌표 + width + 200 으로 새 x 계산
+2. 위 표에 새 행 추가
+3. 에이전트에 명시 좌표 전달 (Components/Documentation 각각)
+
+**병렬 호출 시**: 메인이 두 컴포넌트 좌표를 미리 계산해 각 에이전트에 명시 전달. 다른 좌표라 절대 안 겹침.
 
 ---
 
@@ -184,12 +237,14 @@ src/components/{Name}/
 
 ---
 
-## 8. 미해결 후속 작업 (시드 5개 후 별도 PR 후보)
+## 8. 미해결 후속 작업
 
-1. **focus-ring 토큰** (`--focus-ring-width/offset/color`) — 5개 컴포넌트 공통 하드코딩
-2. **디렉터리 통일** — TextField만 `ui/` 위치, 나머지는 `{Name}/`
-3. **`--shadow-thumb` 토큰** — Switch 인라인 box-shadow 교체
-4. **`--font-weight-semibold` 토큰** — Badge 우회 해소
-5. **`--color-action-bg-ghost-hover` 토큰** — IconButton 다크모드 어포던스
-6. **Storybook dark mode addon** — `prefers-color-scheme` 미디어쿼리를 Storybook decorator로 트리거
-7. **Checkbox → Radix 마이그레이션** — Switch 효과 검증됐으니 후보
+**PR-A 토큰 일괄 신설 완료** (focus-ring/shadow/feedback-surface/font-weight-semibold).
+
+남은 작업:
+1. **디렉터리 통일** — TextField만 `ui/` 위치, 나머지는 `{Name}/` (PR-B)
+2. **Dialog 인라인 keyframes → tailwindcss-animate 통일** (PR-B)
+3. **`--color-action-bg-ghost-hover` 토큰** — IconButton 다크모드 어포던스 (PR-C)
+4. **Storybook dark mode addon** — `prefers-color-scheme` 미디어쿼리를 Storybook decorator로 트리거 (PR-C)
+5. **Checkbox → Radix 마이그레이션** — Switch 효과 검증됐으니 후보 (별도)
+6. **각 QA Medium/Low 잔여** (PR-C)

@@ -1,0 +1,57 @@
+  /* semantic-extras.css — 수동 관리 (figma sync 외 토큰)
+     colors/typography/spacing/motion.css는 /build-tokens 자동 생성이라 이
+  파일에 신설 토큰을 보관.
+     추가 시 DESIGN.md §8 "미해결 후속 작업"에서 해당 항목 제거. */
+
+  :root {
+      /* Focus ring — 모든 interactive 컴포넌트 공통 */
+      --focus-ring-width: 2px;
+      --focus-ring-offset: 2px;
+      --focus-ring-color: var(--color-brand-500);
+
+      /* Font weight extras */
+      --font-weight-semibold: 600;
+
+      /* Feedback surface — Toast/Banner 등 상태 알림용
+           Light: pale 50, Dark: deep 900 (가독성 확보) */
+      --color-feedback-surface-success: var(--color-success-50);
+      --color-feedback-surface-warning: var(--color-warning-50);
+      --color-feedback-surface-danger: var(--color-danger-50);
+
+      /* Shadows — light mode (검정 알파 누적) */
+      --shadow-card-rest:
+          0 1px 3px var(--color-neutral-opacity-100),
+          0 1px 2px var(--color-neutral-opacity-200);
+      --shadow-card-hover:
+          0 4px 8px var(--color-neutral-opacity-200),
+          0 2px 4px var(--color-neutral-opacity-300);
+      --shadow-dialog:
+          0 16px 32px var(--color-neutral-opacity-200);
+      --shadow-overlay:
+          0 4px 12px var(--color-neutral-opacity-100);
+      --shadow-thumb:
+          0 1px 2px var(--color-neutral-opacity-300);
+  }
+
+  @media (prefers-color-scheme: dark) {
+      :root {
+          /* Feedback surface — dark에서 깊은 톤 사용 (50→900) */
+          --color-feedback-surface-success: var(--color-success-900);
+          --color-feedback-surface-warning: var(--color-warning-900);
+          --color-feedback-surface-danger: var(--color-danger-900);
+
+          /* Shadows — 다크에서는 검정 알파가 안 보여 더 진한 강도로 */
+          --shadow-card-rest:
+              0 1px 3px oklch(0 0 0 / 0.4),
+              0 1px 2px oklch(0 0 0 / 0.3);
+          --shadow-card-hover:
+              0 4px 8px oklch(0 0 0 / 0.5),
+              0 2px 4px oklch(0 0 0 / 0.35);
+          --shadow-dialog:
+              0 16px 32px oklch(0 0 0 / 0.55);
+          --shadow-overlay:
+              0 4px 12px oklch(0 0 0 / 0.4);
+          --shadow-thumb:
+              0 1px 2px oklch(0 0 0 / 0.4);
+      }
+  }

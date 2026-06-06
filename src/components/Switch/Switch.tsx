@@ -48,8 +48,8 @@ export const Switch = forwardRef<
     "bg-[var(--color-border-strong)] data-[state=checked]:bg-[var(--color-brand-500)]",
     "transition-colors duration-[var(--motion-duration-base)]",
     "[transition-timing-function:var(--motion-easing-standard)]",
-    "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
-    "focus-visible:outline-[var(--color-brand-500)]",
+    "focus-visible:outline focus-visible:outline-[length:var(--focus-ring-width)] focus-visible:outline-offset-[length:var(--focus-ring-offset)]",
+    "focus-visible:outline-[var(--focus-ring-color)]",
     "disabled:cursor-not-allowed",
     TRACK_SIZE[size],
   ].join(" ");
@@ -57,7 +57,7 @@ export const Switch = forwardRef<
   const thumbClass = [
     "pointer-events-none block rounded-[var(--radius-full)]",
     "bg-[var(--color-action-text-on-brand)]",
-    "shadow-[0_1px_2px_0_var(--color-neutral-opacity-300)]",
+    "shadow-[var(--shadow-thumb)]",
     "transition-transform duration-[var(--motion-duration-base)]",
     "[transition-timing-function:var(--motion-easing-standard)]",
     "will-change-transform",

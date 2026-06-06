@@ -112,8 +112,8 @@ const TRIGGER_BASE = [
   "[transition-timing-function:var(--motion-easing-standard)]",
   "cursor-pointer disabled:cursor-not-allowed",
   "disabled:opacity-[var(--opacity-disabled)]",
-  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
-  "focus-visible:outline-[var(--color-brand-500)]",
+  "focus-visible:outline focus-visible:outline-[length:var(--focus-ring-width)] focus-visible:outline-offset-[length:var(--focus-ring-offset)]",
+  "focus-visible:outline-[var(--focus-ring-color)]",
 ].join(" ");
 
 const TRIGGER_STYLE: Record<TabsVariant, string> = {
@@ -170,8 +170,8 @@ export const TabsContent = forwardRef<
       {...rest}
       ref={ref}
       className={[
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
-        "focus-visible:outline-[var(--color-brand-500)]",
+        "focus-visible:outline focus-visible:outline-[length:var(--focus-ring-width)] focus-visible:outline-offset-[length:var(--focus-ring-offset)]",
+        "focus-visible:outline-[var(--focus-ring-color)]",
         className ?? "",
       ]
         .filter(Boolean)

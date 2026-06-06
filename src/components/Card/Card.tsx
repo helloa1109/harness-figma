@@ -29,10 +29,8 @@ const PADDING_TOKEN: Record<CardPadding, string> = {
   lg: "p-[var(--space-xl)]",
 };
 
-const ELEVATED_SHADOW =
-  "0 1px 3px var(--color-neutral-opacity-100), 0 1px 2px var(--color-neutral-opacity-200)";
-const ELEVATED_SHADOW_HOVER =
-  "0 4px 8px var(--color-neutral-opacity-200), 0 2px 4px var(--color-neutral-opacity-300)";
+const ELEVATED_SHADOW = "var(--shadow-card-rest)";
+const ELEVATED_SHADOW_HOVER = "var(--shadow-card-hover)";
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   {
@@ -79,7 +77,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   const base =
     "rounded-[var(--radius-lg)] transition-all duration-[var(--motion-duration-fast)] ease-[var(--motion-easing-standard)]";
   const interactiveClasses = interactive
-    ? "cursor-pointer hover:-translate-y-[1px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-brand-500)]"
+    ? "cursor-pointer hover:-translate-y-[1px] focus-visible:outline focus-visible:outline-[length:var(--focus-ring-width)] focus-visible:outline-offset-[length:var(--focus-ring-offset)] focus-visible:outline-[var(--focus-ring-color)]"
     : "";
 
   const classes = [

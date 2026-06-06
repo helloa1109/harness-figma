@@ -2,6 +2,7 @@
 @import "./typography.css";
 @import "./spacing.css";
 @import "./motion.css";
+@import "./semantic-extras.css";
 
 /* 전역 기본 */
 *,

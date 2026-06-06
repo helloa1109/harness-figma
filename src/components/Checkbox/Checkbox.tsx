@@ -81,8 +81,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       "relative inline-flex items-center justify-center shrink-0",
       "rounded-[var(--radius-sm)]",
       "border-[length:var(--border-width-thin)] border-solid",
-      "peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2",
-      "peer-focus-visible:outline-[var(--color-brand-500)]",
+      "peer-focus-visible:outline peer-focus-visible:outline-[length:var(--focus-ring-width)] peer-focus-visible:outline-offset-[length:var(--focus-ring-offset)]",
+      "peer-focus-visible:outline-[var(--focus-ring-color)]",
       BOX_SIZE[size],
       boxBorder,
     ].join(" ");

@@ -81,8 +81,8 @@ const CONTENT_CLASS = [
   "bg-[var(--color-surface-default)]",
   "font-[family-name:var(--font-sans)]",
   "focus:outline-none",
-  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
-  "focus-visible:outline-[var(--color-brand-500)]",
+  "focus-visible:outline focus-visible:outline-[length:var(--focus-ring-width)] focus-visible:outline-offset-[length:var(--focus-ring-offset)]",
+  "focus-visible:outline-[var(--focus-ring-color)]",
   "data-[state=open]:animate-[dialogContentIn_var(--motion-duration-base)_var(--motion-easing-emphasized)]",
   "data-[state=closed]:animate-[dialogContentOut_var(--motion-duration-fast)_var(--motion-easing-standard)]",
 ].join(" ");
@@ -144,7 +144,7 @@ export const DialogContent = forwardRef<
         {...rest}
         ref={ref}
         style={{
-          boxShadow: "0 16px 32px var(--color-neutral-opacity-200)",
+          boxShadow: "var(--shadow-dialog)",
           ...style,
         }}
         className={[CONTENT_CLASS, SIZE_WIDTH[size], "relative", className ?? ""]
