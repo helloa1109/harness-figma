@@ -78,6 +78,9 @@
 | 3 | Checkbox | `110:86` | `117:151` | `src/components/Checkbox/Checkbox.tsx` | 12 | ❌ | `a566ff6` |
 | 4 | Switch | `128:66` | `130:230` | `src/components/Switch/Switch.tsx` | 16 | ✅ `@radix-ui/react-switch` | `fc40493` |
 | 5 | IconButton | `137:38` | `141:333` | `src/components/IconButton/IconButton.tsx` | 18 | ❌ | `377279b` |
+| 6 | Skeleton | `148:56` | `151:333` | `src/components/Skeleton/Skeleton.tsx` | 27 | ❌ | (pending) |
+| 7 | TabItem | `155:83` | `158:345` | `src/components/Tab/Tab.tsx` | 18 | ✅ `@radix-ui/react-tabs` | (pending) |
+| 7 | TabsList | `156:89` | `159:400` | `src/components/Tab/Tab.tsx` | 6 | ✅ `@radix-ui/react-tabs` | (pending) |
 
 **기타 (시드 외)**
 - `src/components/ui/Button.tsx` (초기 prototype)
