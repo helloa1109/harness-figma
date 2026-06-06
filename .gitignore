@@ -40,3 +40,6 @@ playwright/.cache
 
 # /build-tokens sentinel
 .claude/.build-tokens-active
+
+# 로컬 메모리 (개인 컨텍스트, 푸시 금지)
+memory/
