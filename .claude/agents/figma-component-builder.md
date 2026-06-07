@@ -226,3 +226,28 @@ variant property가 2개면 → 한쪽 가로, 다른 쪽 세로.
 - **font 로딩 에러**: figma-use canonical text-edit recipe 따르기 (Rule 8)
 - **fills 재할당 에러**: 배열 복제 후 reassign (Rule 7)
 - **에러 시**: 즉시 재시도 금지 → 메시지 읽고 원인 파악 후 수정 (Rule 14)
+
+  ### Line-height 바인딩 규칙 (와이어프레임/화면 텍스트)
+
+  Figma는 number variable을 PIXELS로만 해석. CSS unitless 1.2를 그대로
+  바인딩하면 1.2px → 텍스트 거의 안 보임.
+
+  **룰**:
+  - 텍스트 노드 lineHeight: variable 바인딩 금지
+  - `{ unit: "PERCENT", value: N }`로 직접 입력
+  - 매핑:
+    - tight (1.2) → PERCENT 120
+    - base (1.5) → PERCENT 150
+    - relaxed (1.75) → PERCENT 175
+
+  **구현 패턴**:
+  \`\`\`js
+  await figma.loadFontAsync(node.getRangeFontName(0, 1));
+  node.setBoundVariable("lineHeight", null);
+  node.setRangeLineHeight(0, node.characters.length, { unit: "PERCENT", value:
+  120 });
+  \`\`\`
+
+  컴포넌트 내부 텍스트(Button/TextField label 등)도 동일 규칙 적용.
+
+  ---
